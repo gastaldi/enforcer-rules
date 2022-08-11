@@ -12,6 +12,7 @@ import org.codehaus.plexus.configuration.xml.XmlPlexusConfiguration;
 import org.codehaus.plexus.util.xml.Xpp3DomBuilder;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -38,7 +39,7 @@ public class Descriptors implements EnforcerRule {
         }
     }
 
-    private InputStream resolveDescriptor() throws EnforcerRuleException {
+    private InputStream resolveDescriptor(EnforcerRuleHelper helper) throws EnforcerRuleException {
         InputStream descriptorStream;
         if (descriptorRef != null) {
             descriptorStream = Thread.currentThread().getContextClassLoader()
@@ -47,10 +48,11 @@ public class Descriptors implements EnforcerRule {
                 throw new EnforcerRuleException("Descriptors Ref '" + descriptorRef + "' not found");
             }
         } else if (descriptor != null) {
+            File descriptorFile = helper.alignToBaseDirectory(new File(descriptor));
             try {
-                descriptorStream = Files.newInputStream(Path.of(descriptor));
+                descriptorStream = Files.newInputStream(descriptorFile.toPath());
             } catch (IOException e) {
-                throw new EnforcerRuleException("Could not read descriptor in "+descriptor, e);
+                throw new EnforcerRuleException("Could not read descriptor in "+descriptorFile.getAbsolutePath(), e);
             }
         } else {
             throw new EnforcerRuleException("No descriptorRef or descriptor provided");
@@ -60,7 +62,7 @@ public class Descriptors implements EnforcerRule {
 
     EnforcerDescriptor getEnforcerDescriptor(EnforcerRuleHelper helper)
             throws EnforcerRuleException {
-        try (InputStream descriptorStream = resolveDescriptor()) {
+        try (InputStream descriptorStream = resolveDescriptor(helper)) {
             EnforcerDescriptor descriptor = new EnforcerDescriptor();
             // To get configuration from the enforcer-plugin mojo do:
             //helper.evaluate(helper.getComponent(MojoExecution.class).getConfiguration().getChild("fail").getValue())
