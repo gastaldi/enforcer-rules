@@ -1,9 +1,10 @@
-package org.apache.maven.plugins.enforcer;
+package com.github.gastaldi.plugins.enforcer;
 
 import org.apache.maven.enforcer.rule.api.EnforcerRule;
 import org.apache.maven.enforcer.rule.api.EnforcerRuleException;
 import org.apache.maven.enforcer.rule.api.EnforcerRuleHelper;
 import org.apache.maven.plugin.MojoExecution;
+import org.apache.maven.plugins.enforcer.EnforcerDescriptor;
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
 import org.codehaus.plexus.component.configurator.ComponentConfigurator;
 import org.codehaus.plexus.configuration.PlexusConfiguration;
@@ -16,7 +17,6 @@ import java.io.InputStream;
 
 /**
  * An enforcer rule that will invoke rules from an external resource
- *
  * This is inside the `org.apache.maven.plugins.enforcer` package to ease configuration (and because it may be migrated to the built-in plugins soon)
  *
  * @see https://issues.apache.org/jira/browse/MENFORCER-422
@@ -33,23 +33,24 @@ public class DescriptorRefs implements EnforcerRule {
         if (descriptorStream == null) {
             throw new EnforcerRuleException("Descriptor Ref '" + descriptorRef + "' not found");
         }
-        EnforcerRule[] rules = getEnforcerRules(helper, descriptorStream);
-        for (EnforcerRule rule : rules) {
+        EnforcerDescriptor enforcerDescriptor = getEnforcerDescriptor(helper, descriptorStream);
+        for (EnforcerRule rule : enforcerDescriptor.getRules()) {
             rule.execute(helper);
         }
     }
 
-    private EnforcerRule[] getEnforcerRules(EnforcerRuleHelper helper, InputStream descriptorStream)
+    private EnforcerDescriptor getEnforcerDescriptor(EnforcerRuleHelper helper, InputStream descriptorStream)
             throws EnforcerRuleException {
         try {
-            // Get the enforcer plugin's class resolver
-            EnforcerRuleHolder config = new EnforcerRuleHolder();
-            // Inject rules in EnforcerRuleHolder
+            EnforcerDescriptor descriptor = new EnforcerDescriptor();
+            // To get configuration from the enforcer-plugin mojo do:
             //helper.evaluate(helper.getComponent(MojoExecution.class).getConfiguration().getChild("fail").getValue())
+            // Get the enforcer plugin's class resolver
             ClassRealm realm = helper.getComponent(MojoExecution.class).getMojoDescriptor().getRealm();
             ComponentConfigurator configurator = helper.getComponent(ComponentConfigurator.class, "basic");
-            configurator.configureComponent(config, toPlexusConfiguration(descriptorStream), helper, realm);
-            return config.getRules();
+            // Configure EnforcerDescriptor from the XML
+            configurator.configureComponent(descriptor, toPlexusConfiguration(descriptorStream), helper, realm);
+            return descriptor;
         } catch (Exception e) {
             throw new EnforcerRuleException("Error while enforcing rules", e);
         }

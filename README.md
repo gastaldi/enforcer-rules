@@ -29,7 +29,7 @@ Add the following to your pom.xml:
             <configuration>
                 <rules>
                     <!-- This is where we use our shared enforcer descriptor -->
-                    <descriptorRefs>
+                    <descriptorRefs implementation="com.github.gastaldi.plugins.enforcer.DescriptorRefs">
                         <descriptorRef>quarkus</descriptorRef>
                     </descriptorRefs>
                 </rules>
@@ -45,4 +45,4 @@ Add the following to your pom.xml:
 
 In the example above `<descriptorRef>quarkus</descriptorRef>` is an XML file in `enforcer-rules/quarkus.xml` existing in the plugin dependencies.
 
-Heavily based on https://maven.apache.org/plugins/maven-assembly-plugin/examples/sharing-descriptors.html****
+Heavily based on https://maven.apache.org/plugins/maven-assembly-plugin/examples/sharing-descriptors.html
