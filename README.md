@@ -31,6 +31,8 @@ Add the following to your pom.xml:
                     <!-- This is where we use our shared enforcer descriptor -->
                     <descriptors implementation="com.github.gastaldi.plugins.enforcer.Descriptors">
                         <descriptorRef>quarkus</descriptorRef>
+                        <!-- You can also use a file path -->
+                        <!--<descriptor>enforcer-rules.xml</descriptor> -->
                     </descriptors>
                 </rules>
             </configuration>
