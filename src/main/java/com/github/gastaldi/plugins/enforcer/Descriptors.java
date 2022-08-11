@@ -14,6 +14,8 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * An enforcer rule that will invoke rules from an external resource
@@ -21,27 +23,44 @@ import java.io.InputStream;
  *
  * @see https://issues.apache.org/jira/browse/MENFORCER-422
  */
-public class DescriptorRefs implements EnforcerRule {
+public class Descriptors implements EnforcerRule {
 
     String descriptorRef;
+
+    String descriptor;
 
     @Override
     public void execute(EnforcerRuleHelper helper) throws EnforcerRuleException {
         // Find descriptor
-        InputStream descriptorStream = Thread.currentThread().getContextClassLoader()
-                .getResourceAsStream("enforcer-rules/" + descriptorRef + ".xml");
-        if (descriptorStream == null) {
-            throw new EnforcerRuleException("Descriptor Ref '" + descriptorRef + "' not found");
-        }
-        EnforcerDescriptor enforcerDescriptor = getEnforcerDescriptor(helper, descriptorStream);
+        EnforcerDescriptor enforcerDescriptor = getEnforcerDescriptor(helper);
         for (EnforcerRule rule : enforcerDescriptor.getRules()) {
             rule.execute(helper);
         }
     }
 
-    private EnforcerDescriptor getEnforcerDescriptor(EnforcerRuleHelper helper, InputStream descriptorStream)
+    private InputStream resolveDescriptor() throws EnforcerRuleException {
+        InputStream descriptorStream;
+        if (descriptorRef != null) {
+            descriptorStream = Thread.currentThread().getContextClassLoader()
+                    .getResourceAsStream("enforcer-rules/" + descriptorRef + ".xml");
+            if (descriptorStream == null) {
+                throw new EnforcerRuleException("Descriptors Ref '" + descriptorRef + "' not found");
+            }
+        } else if (descriptor != null) {
+            try {
+                descriptorStream = Files.newInputStream(Path.of(descriptor));
+            } catch (IOException e) {
+                throw new EnforcerRuleException("Could not read descriptor in "+descriptor, e);
+            }
+        } else {
+            throw new EnforcerRuleException("No descriptorRef or descriptor provided");
+        }
+        return descriptorStream;
+    }
+
+    EnforcerDescriptor getEnforcerDescriptor(EnforcerRuleHelper helper)
             throws EnforcerRuleException {
-        try {
+        try (InputStream descriptorStream = resolveDescriptor()) {
             EnforcerDescriptor descriptor = new EnforcerDescriptor();
             // To get configuration from the enforcer-plugin mojo do:
             //helper.evaluate(helper.getComponent(MojoExecution.class).getConfiguration().getChild("fail").getValue())
@@ -51,6 +70,8 @@ public class DescriptorRefs implements EnforcerRule {
             // Configure EnforcerDescriptor from the XML
             configurator.configureComponent(descriptor, toPlexusConfiguration(descriptorStream), helper, realm);
             return descriptor;
+        } catch (EnforcerRuleException e) {
+            throw e;
         } catch (Exception e) {
             throw new EnforcerRuleException("Error while enforcing rules", e);
         }

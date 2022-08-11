@@ -1,0 +1,5 @@
+<enforcer>
+    <rules>
+        <AlwaysFail/>
+    </rules>
+</enforcer>

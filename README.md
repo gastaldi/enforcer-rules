@@ -29,9 +29,9 @@ Add the following to your pom.xml:
             <configuration>
                 <rules>
                     <!-- This is where we use our shared enforcer descriptor -->
-                    <descriptorRefs implementation="com.github.gastaldi.plugins.enforcer.DescriptorRefs">
+                    <descriptors implementation="com.github.gastaldi.plugins.enforcer.Descriptors">
                         <descriptorRef>quarkus</descriptorRef>
-                    </descriptorRefs>
+                    </descriptors>
                 </rules>
             </configuration>
             <goals>
