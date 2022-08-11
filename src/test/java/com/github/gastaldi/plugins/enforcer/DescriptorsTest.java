@@ -11,11 +11,30 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class DescriptorsTest {
 
     @Test
+    void shouldFailIfNoDescriptorIsSet() {
+        Descriptors rule = new Descriptors();
+        EnforcerRuleHelper helper = EnforcerTestUtils.getHelper();
+        assertThatExceptionOfType(EnforcerRuleException.class).isThrownBy(() -> rule.execute(helper))
+                .withMessage("No descriptorRef or descriptor provided");
+    }
+
+    @Test
     void shouldFailIfRefIsNotFound() {
         Descriptors rule = new Descriptors();
         rule.setDescriptorRef("foo");
         EnforcerRuleHelper helper = EnforcerTestUtils.getHelper();
         assertThatExceptionOfType(EnforcerRuleException.class).isThrownBy(() -> rule.execute(helper))
-                .withMessage("Descriptors Ref 'foo' not found");
+                .withMessage("Descriptor Ref 'foo' not found");
     }
+
+    @Test
+    void shouldFailIfDescriptorIsNotFound() {
+        Descriptors rule = new Descriptors();
+        rule.setDescriptor("blah.xml");
+        EnforcerRuleHelper helper = EnforcerTestUtils.getHelper();
+        assertThatExceptionOfType(EnforcerRuleException.class).isThrownBy(() -> rule.execute(helper))
+                .withMessageMatching("Could not read descriptor in .*blah.xml");
+    }
+
+
 }

@@ -45,14 +45,14 @@ public class Descriptors implements EnforcerRule {
             descriptorStream = Thread.currentThread().getContextClassLoader()
                     .getResourceAsStream("enforcer-rules/" + descriptorRef + ".xml");
             if (descriptorStream == null) {
-                throw new EnforcerRuleException("Descriptors Ref '" + descriptorRef + "' not found");
+                throw new EnforcerRuleException("Descriptor Ref '" + descriptorRef + "' not found");
             }
         } else if (descriptor != null) {
             File descriptorFile = helper.alignToBaseDirectory(new File(descriptor));
             try {
                 descriptorStream = Files.newInputStream(descriptorFile.toPath());
             } catch (IOException e) {
-                throw new EnforcerRuleException("Could not read descriptor in "+descriptorFile.getAbsolutePath(), e);
+                throw new EnforcerRuleException("Could not read descriptor in "+descriptorFile, e);
             }
         } else {
             throw new EnforcerRuleException("No descriptorRef or descriptor provided");
@@ -105,5 +105,13 @@ public class Descriptors implements EnforcerRule {
 
     public String getDescriptorRef() {
         return descriptorRef;
+    }
+
+    public void setDescriptor(String descriptor) {
+        this.descriptor = descriptor;
+    }
+
+    public String getDescriptor() {
+        return descriptor;
     }
 }
