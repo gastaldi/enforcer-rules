@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * An enforcer rule that will invoke rules from an external resource
@@ -24,7 +23,7 @@ import java.nio.file.Path;
  *
  * @see https://issues.apache.org/jira/browse/MENFORCER-422
  */
-public class Descriptors implements EnforcerRule {
+public class ExternalRule implements EnforcerRule {
 
     String descriptorRef;
 

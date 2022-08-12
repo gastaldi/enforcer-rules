@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-class DescriptorsTest {
+class ExternalRuleTest {
 
     @Test
     void shouldFailIfNoDescriptorIsSet() {
-        Descriptors rule = new Descriptors();
+        ExternalRule rule = new ExternalRule();
         EnforcerRuleHelper helper = EnforcerTestUtils.getHelper();
         assertThatExceptionOfType(EnforcerRuleException.class).isThrownBy(() -> rule.execute(helper))
                 .withMessage("No descriptorRef or descriptor provided");
@@ -20,7 +20,7 @@ class DescriptorsTest {
 
     @Test
     void shouldFailIfRefIsNotFound() {
-        Descriptors rule = new Descriptors();
+        ExternalRule rule = new ExternalRule();
         rule.setDescriptorRef("foo");
         EnforcerRuleHelper helper = EnforcerTestUtils.getHelper();
         assertThatExceptionOfType(EnforcerRuleException.class).isThrownBy(() -> rule.execute(helper))
@@ -29,7 +29,7 @@ class DescriptorsTest {
 
     @Test
     void shouldFailIfDescriptorIsNotFound() {
-        Descriptors rule = new Descriptors();
+        ExternalRule rule = new ExternalRule();
         rule.setDescriptor("blah.xml");
         EnforcerRuleHelper helper = EnforcerTestUtils.getHelper();
         assertThatExceptionOfType(EnforcerRuleException.class).isThrownBy(() -> rule.execute(helper))
