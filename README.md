@@ -29,7 +29,7 @@ Add the following to your pom.xml:
             <configuration>
                 <rules>
                     <!-- This is where we use our shared enforcer descriptor -->
-                    <ExternalRule implementation="com.github.gastaldi.plugins.enforcer.ExternalRules">
+                    <ExternalRule>
                         <location>quarkus.xml</location>
                         <!-- You can also use a file path -->
                         <!--<descriptor>enforcer-rules.xml</descriptor> -->

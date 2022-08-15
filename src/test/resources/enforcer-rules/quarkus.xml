@@ -5,6 +5,6 @@
             -->
     <!--TODO: The XML Schema does not exist yet -->
     <rules>
-        <CustomRule implementation="com.github.gastaldi.plugins.enforcer.CustomRule"/>
+        <CustomRule implementation="org.apache.maven.plugins.enforcer.CustomRule"/>
     </rules>
 </enforcer>

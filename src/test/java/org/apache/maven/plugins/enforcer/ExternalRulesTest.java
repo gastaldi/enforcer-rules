@@ -1,9 +1,8 @@
-package com.github.gastaldi.plugins.enforcer;
+package org.apache.maven.plugins.enforcer;
 
-import com.github.gastaldi.plugins.enforcer.util.EnforcerTestUtils;
+import org.apache.maven.plugins.enforcer.util.EnforcerTestUtils;
 import org.apache.maven.enforcer.rule.api.EnforcerRuleException;
 import org.apache.maven.enforcer.rule.api.EnforcerRuleHelper;
-import org.apache.maven.plugins.enforcer.EnforcerDescriptor;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

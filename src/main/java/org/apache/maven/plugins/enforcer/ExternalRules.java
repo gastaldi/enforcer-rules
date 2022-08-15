@@ -1,4 +1,4 @@
-package com.github.gastaldi.plugins.enforcer;
+package org.apache.maven.plugins.enforcer;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one

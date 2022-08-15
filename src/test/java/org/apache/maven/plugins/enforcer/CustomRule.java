@@ -1,4 +1,4 @@
-package com.github.gastaldi.plugins.enforcer;
+package org.apache.maven.plugins.enforcer;
 
 import org.apache.maven.enforcer.rule.api.EnforcerRule;
 import org.apache.maven.enforcer.rule.api.EnforcerRuleException;
