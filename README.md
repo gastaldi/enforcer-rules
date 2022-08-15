@@ -21,7 +21,7 @@ Add the following to your pom.xml:
         <dependency>
             <groupId>com.github.gastaldi</groupId>
             <artifactId>enforcer-rules</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
     </dependencies>
     <executions>
