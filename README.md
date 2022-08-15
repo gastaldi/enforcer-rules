@@ -29,7 +29,7 @@ Add the following to your pom.xml:
             <id>enforce</id>
             <configuration>
                 <rules>
-                    <!-- This is where we use our shared enforcer descriptor -->
+                    <!-- This is where we use our External Rules -->
                     <ExternalRule>
                         <location>classpath:enforcer-rules/my-rules.xml</location>
                         <!-- You can also use a file path -->
