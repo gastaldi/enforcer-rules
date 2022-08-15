@@ -1,4 +1,6 @@
-# descriptor-rule
+# Enforcer Rules
+
+## ExternalRules 
 An Enforcer Rule that allows reusing Enforcer Rules by reading rule descriptor files
 
 
@@ -6,12 +8,11 @@ This rule supports rule descriptors to allow reusing enforcer rules as maven dep
 
 See https://issues.apache.org/jira/browse/MENFORCER-422 for more detail
 
-## Usage
+### Usage
 
 Add the following to your pom.xml:
 
 ```xml
-
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-enforcer-plugin</artifactId>
@@ -19,7 +20,7 @@ Add the following to your pom.xml:
     <dependencies>
         <dependency>
             <groupId>com.github.gastaldi</groupId>
-            <artifactId>descriptor-rule</artifactId>
+            <artifactId>enforcer-rules</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
@@ -30,9 +31,9 @@ Add the following to your pom.xml:
                 <rules>
                     <!-- This is where we use our shared enforcer descriptor -->
                     <ExternalRule>
-                        <location>quarkus.xml</location>
+                        <location>classpath:enforcer-rules/quarkus.xml</location>
                         <!-- You can also use a file path -->
-                        <!--<descriptor>enforcer-rules.xml</descriptor> -->
+                        <!--<location>enforcer-rules.xml</location> -->
                     </ExternalRule>
                 </rules>
             </configuration>
@@ -45,6 +46,6 @@ Add the following to your pom.xml:
 
 ```
 
-In the example above `<descriptorRef>quarkus</descriptorRef>` is an XML file in `enforcer-rules/quarkus.xml` existing in the plugin dependencies.
+In the example above `<location>classpath:enforcer-rules/quarkus.xml</location>` is an XML file in `enforcer-rules/quarkus.xml` existing in the plugin dependencies.
 
 Heavily based on https://maven.apache.org/plugins/maven-assembly-plugin/examples/sharing-descriptors.html
