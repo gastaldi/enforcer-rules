@@ -7,7 +7,7 @@
     </parent>
     <groupId>com.github.gastaldi</groupId>
     <artifactId>descriptor-rule</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>Rules Descriptor Rule</name>
     <description>A Maven Enforcer Rule that allows reusing Enforcer Rules by reading rule descriptor files</description>
     <properties>
@@ -113,7 +113,7 @@
         <connection>scm:git:git@github.com:gastaldi/descriptor-rule.git</connection>
         <developerConnection>scm:git:git@github.com:gastaldi/descriptor-rule.git</developerConnection>
         <url>http://github.com/gastaldi/descriptor-rule</url>
-        <tag>HEAD</tag>
+        <tag>0.0.1</tag>
     </scm>
     <distributionManagement>
         <snapshotRepository>
