@@ -31,7 +31,7 @@ Add the following to your pom.xml:
                 <rules>
                     <!-- This is where we use our shared enforcer descriptor -->
                     <ExternalRule>
-                        <location>classpath:enforcer-rules/quarkus.xml</location>
+                        <location>classpath:enforcer-rules/my-rules.xml</location>
                         <!-- You can also use a file path -->
                         <!--<location>enforcer-rules.xml</location> -->
                     </ExternalRule>
@@ -46,6 +46,30 @@ Add the following to your pom.xml:
 
 ```
 
-In the example above `<location>classpath:enforcer-rules/quarkus.xml</location>` is an XML file in `enforcer-rules/quarkus.xml` existing in the plugin dependencies.
+In the example above `<location>classpath:enforcer-rules/my-rules.xml</location>` is an XML file in `enforcer-rules/my-rules.xml` existing in the plugin dependencies.
+
+The `enforcer-rules/my-rules.xml` has the following content: 
+
+```xml
+<enforcer>
+    <rules>
+        <dependencyConvergence/>
+        <requireJavaVersion>
+            <version>[${maven.compiler.release},)</version>
+        </requireJavaVersion>
+        <requireMavenVersion>
+            <version>${supported-maven-versions}</version>
+        </requireMavenVersion>
+        <bannedDependencies>
+            <excludes>
+                <exclude>org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec</exclude>
+            </excludes>
+            <includes>
+                <include>jakarta.xml.bind:jakarta.xml.bind-api:*:*:test</include>
+            </includes>
+        </bannedDependencies>
+    </rules>
+</enforcer>
+```
 
 Heavily based on https://maven.apache.org/plugins/maven-assembly-plugin/examples/sharing-descriptors.html
