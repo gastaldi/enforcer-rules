@@ -30,11 +30,11 @@ Add the following to your pom.xml:
             <configuration>
                 <rules>
                     <!-- This is where we use our External Rules -->
-                    <ExternalRule>
+                    <externalRules>
                         <location>classpath:enforcer-rules/my-rules.xml</location>
                         <!-- You can also use a file path -->
                         <!--<location>enforcer-rules.xml</location> -->
-                    </ExternalRule>
+                    </externalRules>
                 </rules>
             </configuration>
             <goals>
