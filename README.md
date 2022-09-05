@@ -55,10 +55,10 @@ The `enforcer-rules/my-rules.xml` has the following content:
     <rules>
         <dependencyConvergence/>
         <requireJavaVersion>
-            <version>[${maven.compiler.release},)</version>
+            <version>[11,)</version>
         </requireJavaVersion>
         <requireMavenVersion>
-            <version>${supported-maven-versions}</version>
+            <version>[3.6.2,)</version>
         </requireMavenVersion>
         <bannedDependencies>
             <excludes>
