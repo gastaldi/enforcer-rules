@@ -55,7 +55,7 @@ The `enforcer-rules/my-rules.xml` has the following content:
     <rules>
         <dependencyConvergence/>
         <requireJavaVersion>
-            <version>[11,)</version>
+            <version>11</version>
         </requireJavaVersion>
         <requireMavenVersion>
             <version>[3.6.2,)</version>
